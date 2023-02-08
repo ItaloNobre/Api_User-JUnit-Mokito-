@@ -13,6 +13,6 @@ public class UserContoller {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Integer id){
-        return ResponseEntity.ok().body(new User(1,"italo","email","124"));
+        return ResponseEntity.ok().body(new User(1,"italo","email","124d"));
     }
 }
