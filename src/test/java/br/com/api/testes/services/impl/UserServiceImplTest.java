@@ -3,7 +3,7 @@ package br.com.api.testes.services.impl;
 import br.com.api.testes.domain.User;
 import br.com.api.testes.domain.dto.UserDTO;
 import br.com.api.testes.repositories.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.api.testes.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
@@ -56,6 +55,18 @@ class UserServiceImplTest {
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
 
+    }
+
+    @Test
+    void whenFindByIdThenReturnObjectNotFoundException(){
+        Mockito.when(repository.findById(Mockito.anyInt())).
+                thenThrow(new ObjectNotFoundException("Objeto não encontrado!"));
+        try {
+            service.findById(ID);
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Objeto não encontrado!", ex.getMessage());
+        }
     }
 
     @Test
