@@ -48,7 +48,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Integer id) {
-        repository.delete(findById(id));
+        findById(id);
+        repository.deleteById(id);
     }
 
     private void findByEmail(UserDTO obj){
