@@ -11,11 +11,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-public class UserContoller {
+public class UserController {
 
     public static final String ID = "{id}";
     @Autowired
