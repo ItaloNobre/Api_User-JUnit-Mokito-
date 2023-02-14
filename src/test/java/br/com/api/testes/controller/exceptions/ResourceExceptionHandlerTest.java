@@ -21,7 +21,6 @@ class ResourceExceptionHandlerTest {
     @InjectMocks
     private ResourceExceptionHandler exceptionHandler;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -42,7 +41,6 @@ class ResourceExceptionHandlerTest {
         assertEquals(404, response.getBody().getStatus());
         assertNotEquals("/user/2", response.getBody().getPath());
         assertNotEquals(LocalDateTime.now(), response.getBody().getTimestamp());
-
     }
 
     @Test
@@ -58,6 +56,5 @@ class ResourceExceptionHandlerTest {
         assertEquals(StandardError.class, response.getBody().getClass());
         assertEquals(EMAIL_JA_CADASTRADO, response.getBody().getError());
         assertEquals(400, response.getBody().getStatus());
-
     }
 }
