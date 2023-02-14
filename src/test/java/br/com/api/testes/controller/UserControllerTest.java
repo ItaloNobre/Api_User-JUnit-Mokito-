@@ -42,8 +42,8 @@ class UserControllerTest {
     @Mock
     private ModelMapper mapper;
 
-    private User user;
-    private UserDTO userDTO;
+    private User user = new User();
+    private UserDTO userDTO = new UserDTO();
 
 
     @BeforeEach
@@ -92,7 +92,7 @@ class UserControllerTest {
 
     @Test
     void whenCreateThenReturnCreated() {
-        Mockito.when(service.create(Mockito.any())).thenReturn(user);
+       Mockito.when(service.create(Mockito.any())).thenReturn(user);
 
         ResponseEntity<UserDTO> response = controller.create(userDTO);
 
