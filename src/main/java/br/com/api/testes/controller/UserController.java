@@ -28,6 +28,7 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
         return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDTO.class));
     }
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
         List<User> list = service.findAll();
@@ -45,14 +46,12 @@ public class UserController {
     @PutMapping("/" + ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO obj){
         obj.setId(id);
-        return ResponseEntity.accepted().body(mapper.map(service.update(obj), UserDTO.class));
+        return ResponseEntity.ok().body(mapper.map(service.update(obj), UserDTO.class));
     }
 
     @DeleteMapping("/" + ID)
     public ResponseEntity<UserDTO> delete(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();
-
     }
-
 }

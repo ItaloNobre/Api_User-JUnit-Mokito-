@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
     }
 
+    @Override
     public List<User> findAll() {
         return repository.findAll();
     }
@@ -36,26 +37,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(UserDTO obj) {
         findByEmail(obj);
-
         return repository.save(modelMapper.map(obj, User.class));
     }
 
     @Override
     public User update(UserDTO obj) {
         findByEmail(obj);
-
         return repository.save(modelMapper.map(obj,User.class));
-    }
 
+    }
     @Override
     public void delete(Integer id) {
         findById(id);
         repository.deleteById(id);
     }
 
+
     private void findByEmail(UserDTO obj){
         Optional<User> user = repository.findByEmail(obj.getEmail());
         if(user.isPresent() && !user.get().getId().equals(obj.getId())){
+
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
         }
     }
