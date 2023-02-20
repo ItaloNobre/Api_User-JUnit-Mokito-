@@ -3,13 +3,13 @@ package br.com.api.testes.controller;
 import br.com.api.testes.domain.User;
 import br.com.api.testes.domain.dto.UserDTO;
 import br.com.api.testes.services.impl.UserServiceImpl;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +20,7 @@ public class UserController {
     public static final String ID = "{id}";
     @Autowired
     private ModelMapper mapper;
+
 
     @Autowired
     UserServiceImpl service;
@@ -37,10 +38,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create (@RequestBody UserDTO obj){
-        User user = service.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + ID).buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO obj) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.create(obj),UserDTO.class));
     }
 
     @PutMapping("/" + ID)
