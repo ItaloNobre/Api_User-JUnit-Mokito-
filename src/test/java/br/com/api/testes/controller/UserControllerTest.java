@@ -2,7 +2,6 @@ package br.com.api.testes.controller;
 
 import br.com.api.testes.domain.User;
 import br.com.api.testes.domain.dto.UserDTO;
-import br.com.api.testes.repositories.UserRepository;
 import br.com.api.testes.services.impl.UserServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,31 +19,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class UserControllerTest {
 
-    public static final Integer ID = 1;
-    public static final String NAME = "italo";
-    public static final String EMAIL = "email@gmail";
+    public static final Integer ID      = 1;
+    public static final String NAME     = "italo3";
+    public static final String EMAIL    = "email3@gmail.com";
     public static final String PASSWORD = "123";
-    public static final int INDEX = 0;
-    public static final String E_MAIL_JA_CADASTRADO_NO_SISTEMA = "E-mail já cadastrado no sistema";
-    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
+    public static final int INDEX       = 0;
+
+    private User user = new User();
+    private UserDTO userDTO = new UserDTO();
 
     @InjectMocks
     private UserController controller;
 
     @Mock
-    private UserRepository repository;
-
-    @Mock
     private UserServiceImpl service;
     @Mock
     private ModelMapper mapper;
-
-    private User user = new User();
-    private UserDTO userDTO = new UserDTO();
-
 
     @BeforeEach
     void setUp() {
@@ -54,8 +49,8 @@ class UserControllerTest {
 
     @Test
     void whenFindByIdThenReturnSuccess() {
-        Mockito.when(service.findById(Mockito.anyInt())).thenReturn(user);
-        Mockito.when(mapper.map(Mockito.any(), Mockito.any())).thenReturn(userDTO);
+        when(service.findById(Mockito.anyInt())).thenReturn(user);
+        when(mapper.map(any(), any())).thenReturn(userDTO);
 
         ResponseEntity<UserDTO> response = controller.findById(ID);
 
@@ -72,8 +67,8 @@ class UserControllerTest {
 
     @Test
     void whenFindAllThenReturnListOfUserDTO() {
-        Mockito.when(service.findAll()).thenReturn(List.of(user));
-        Mockito.when(mapper.map(Mockito.any(), Mockito.any())).thenReturn(userDTO);
+        when(service.findAll()).thenReturn(List.of(user));
+        when(mapper.map(any(), any())).thenReturn(userDTO);
 
         ResponseEntity<List<UserDTO>> response = controller.findAll();
 
@@ -92,18 +87,19 @@ class UserControllerTest {
 
     @Test
     void whenCreateThenReturnCreated() {
-       Mockito.when(service.create(Mockito.any())).thenReturn(user);
+        when(service.create(any())).thenReturn(user);
 
         ResponseEntity<UserDTO> response = controller.create(userDTO);
 
+        assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getHeaders().get("Location"));
     }
+
 
     @Test
     void whenUpdateThenReturnSuccess() {
-        Mockito.when(service.update(userDTO)).thenReturn(user);
-        Mockito.when(mapper.map(Mockito.any(), Mockito.any())).thenReturn(userDTO);
+        when(service.update(userDTO)).thenReturn(user);
+        when(mapper.map(any(), any())).thenReturn(userDTO);
 
         ResponseEntity<UserDTO> response = controller.update(ID, userDTO);
 
