@@ -2,6 +2,7 @@ package br.com.api.testes.controller.exceptions;
 
 import br.com.api.testes.services.exceptions.DataIntegrityViolationException;
 import br.com.api.testes.services.exceptions.ObjectNotFoundException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

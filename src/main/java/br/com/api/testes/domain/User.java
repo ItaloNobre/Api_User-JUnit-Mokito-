@@ -1,13 +1,11 @@
 package br.com.api.testes.domain;
-
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity(name = "usuario")
 public class User {
 
